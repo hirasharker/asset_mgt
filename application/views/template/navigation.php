@@ -117,7 +117,7 @@
             <li><a href="<?php echo base_url();?>inventory/issue">Issue</a></li>
             <li><a>Approval Requisition<span class="fa fa-chevron-down"></span></a>
               <ul class="nav child_menu">
-                <li class="sub_menu"><a href="<?php echo base_url();?>requisition/approval_reporting_head">Reporting Head</a>
+                <li class="sub_menu"><a href="<?php echo base_url();?>approval_requisition/approval_requisition_head">Reporting Head</a>
                 </li>
                 <li><a href="<?php echo base_url();?>requisition/approval_it">It Department</a>
                 </li>

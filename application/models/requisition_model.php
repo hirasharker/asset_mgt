@@ -20,6 +20,24 @@ class Requisition_Model extends CI_Model {
         return $result;
     }
 
+
+    public function get_all_active_requisitions(){
+        $this->db->select("tbl_requisition.*, string_agg(tbl_item.item_name, ', ') as item_name, tbl_employee.employee_name, array_agg(tbl_dept_head.employee_name) as department_head ");
+        $this->db->from('tbl_requisition');
+        $this->db->join('tbl_requisition_detail','tbl_requisition_detail.requisition_id = tbl_requisition.requisition_id','inner');
+        $this->db->join('tbl_item','tbl_item.item_id = tbl_requisition_detail.item_id','left');
+        $this->db->join('tbl_employee','tbl_employee.employee_id = tbl_requisition.employee_id','left');
+        $this->db->join('tbl_department','tbl_department.department_id = tbl_employee.department_id','left');
+        $this->db->join('tbl_employee as tbl_dept_head','tbl_dept_head.employee_id = tbl_department.department_head_id','left');
+        $this->db->where('tbl_requisition_detail.status',0);
+        $this->db->group_by('tbl_requisition.requisition_id');$this->db->group_by('tbl_requisition.requisition_id');
+        $this->db->group_by('tbl_employee.employee_name');
+        $this->db->group_by('tbl_requisition.requisition_id');
+        $result_query=$this->db->get();
+        $result=$result_query->result();
+        return $result;
+    }
+
     // , string_agg(tbl.item_name, ', ') as item_name,
 
     public function get_requisition_by_id($requisition_id){
@@ -33,10 +51,12 @@ class Requisition_Model extends CI_Model {
     
 
     public function get_requisition_by_employee_id($employee_id){
-        $this->db->select('*');
+        $this->db->select('tbl_requisition.requisition_id, tbl_requisition.employee_id');
         $this->db->from('tbl_requisition');
+        $this->db->join('tbl_requisition_detail','tbl_requisition_detail.requisition_id = tbl_requisition.requisition_id', 'inner');
         $this->db->where('employee_id',$employee_id);
-        $this->db->where();
+        $this->db->where('tbl_requisition_detail.status',0);
+        $this->db->group_by('tbl_requisition.requisition_id');
         $result_query=$this->db->get();
         $result=$result_query->result();
         return $result;
@@ -103,6 +123,14 @@ class Requisition_Model extends CI_Model {
         $result=$result_query->result();
         return $result;
     }
+
+    public function update_requisition_detail($data,$requisition_detail_id){
+        $this->db->where('requisition_detail_id',$requisition_detail_id);
+        $this->db->update('tbl_requisition_detail',$data);
+        $result     =   $this->db->affected_rows();
+        return $result;
+    }
+    
     
 }
 ?>

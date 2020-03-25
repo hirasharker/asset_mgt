@@ -220,7 +220,7 @@ class Inventory extends CI_Controller {
 
         $nav_data['user_permission'] 					=	$this->module_model->get_permission_by_user_id($this->session->userdata('user_id'));
 
-        $data['page_title']    							=   'Receive';
+        $data['page_title']    							=   'Issue';
 
         $content_data									=	array();
 
@@ -258,11 +258,17 @@ class Inventory extends CI_Controller {
 
 		$stock_data 								=	array();
 
+		$requisition_detail_data					=	array();
+
+		$requisition_detail_id 						=	$this->input->post('requisition_detail_id');
+
 		$item_id									=	$this->input->post('item_id');
 
 		$stock_id									=	$this->input->post('stock_id');
 
 		$quantity									=	$this->input->post('quantity');
+
+		// print_r($stock_id);exit();
 
 
 		if($result){
@@ -289,7 +295,12 @@ class Inventory extends CI_Controller {
 
 				if($detail_result){
 					$stock_result 					=	$this->stock_model->update_stock($stock_data, trim($stock_id[$i]));
-					
+					if($issue_detail_data['stock_id'] != ''){
+						$requisition_detail_data['status'] 	=	1;
+
+						$requisition_detail_result 		=	$this->requisition_model->update_requisition_detail($requisition_detail_data, trim($requisition_detail_id[$i]));
+					}
+						
 				}
 			}
 		}

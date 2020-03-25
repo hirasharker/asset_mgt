@@ -46,7 +46,7 @@ class Department extends CI_Controller {
 
         $content_data['department_list']				=	$this->dept_model->get_all_departments();
 
-        $data['navigation'] 							=   $this->load->view('template/navigation','',TRUE);
+        $data['navigation'] 							=   $this->load->view('template/navigation',$nav_data,TRUE);
         $data['content']    							=   $this->load->view('pages/organization/department/department',$content_data,TRUE);
         $data['footer']    								=   $this->load->view('template/footer','',TRUE);
 		$this->load->view('template/main_template',$data);

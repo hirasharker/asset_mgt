@@ -39,7 +39,7 @@ class Branch extends CI_Controller {
 
         $nav_data['user_permission'] 					=	$this->module_model->get_permission_by_user_id($this->session->userdata('user_id'));
 
-        $data['page_title']    							=   'BRANCH';
+        $data['page_title']    							=   'Approval Requisition';
 
         $content_data									=	array();
 

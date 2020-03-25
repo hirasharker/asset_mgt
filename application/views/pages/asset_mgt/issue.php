@@ -2,7 +2,7 @@
 <div class="">
   <div class="page-title">
     <div class="title_left">
-      <h3>branch <small></small></h3>
+      <h3>Issue <small></small></h3>
     </div>
 
     <div class="title_right">
@@ -47,7 +47,7 @@
             <form class="form-horizontal form-label-left" method="post" action="<?php echo base_url();?>inventory/add_issue">
 
                 <div class="x_title">
-                <h2>issue <small></small></h2>
+                <h2>Issue to employee <small></small></h2>
                   <div class="clearfix"></div>
                 </div>
                 
@@ -474,6 +474,7 @@
                   count++;
                   var code =  '<div class="form-group col-md-12 col-sm-12 col-xs-12">'
                           +'<label class="control-label col-md-5 col-sm-5 col-xs-12 col-md-offset-2">'+d.item_name+' </label>'
+                          +'<input type="hidden" name="requisition_detail_id[]" value="'+d.requisition_detail_id+'">'
                           +'<input type="hidden" id="'+requisitionId+'itemId" name="item_id[]" value="'+d.item_id+'">'
                           +'<div class="col-md-2 col-sm-3 col-xs-12">'
                               +'<select class="form-control" id="'+d.item_id+'serial" name="stock_id[]"></select>'
@@ -503,6 +504,9 @@
     }); //ajax_________________
 
     function ajax_check_stock(val){
+        
+        $('#'+val+'serial').append('<option value="" >Select SN</option>');
+
         $.ajax({
             type: "POST",
             url: "<?php echo base_url()?>inventory/ajax_get_stock_by_item_id/",
